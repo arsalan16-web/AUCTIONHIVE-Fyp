@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AUCTIONHIVE.Data;
 using AUCTIONHIVE.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AUCTIONHIVE.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;

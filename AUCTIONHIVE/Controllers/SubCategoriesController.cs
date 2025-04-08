@@ -48,7 +48,8 @@ namespace AUCTIONHIVE.Controllers
         // GET: SubCategories/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
+            // Load dropdown data
+            ViewBag.Categories = _context.Categories.Where(c => c.IsDeleted == false).ToList();
             return View();
         }
 
@@ -57,16 +58,20 @@ namespace AUCTIONHIVE.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,CategoryId,Id,CreatedBy,UpdatedBy,CreatedAt,UpdateAt")] SubCategory subCategory)
+        public async Task<IActionResult> Create(SubCategory subCategory)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(subCategory);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", subCategory.CategoryId);
-            return View(subCategory);
+            subCategory.Id= Guid.NewGuid().ToString();
+            subCategory.Description = subCategory.Description;
+            subCategory.Name = subCategory.Name;
+            subCategory.CategoryId = subCategory.CategoryId;
+            subCategory.UpdateAt = DateTime.Now;
+            subCategory.CreatedAt = DateTime.Now;
+            _context.Add(subCategory);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+            //ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", subCategory.CategoryId);
+            //return View(subCategory);
         }
 
         // GET: SubCategories/Edit/5
@@ -82,7 +87,7 @@ namespace AUCTIONHIVE.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", subCategory.CategoryId);
+            ViewBag.Categories = _context.Categories.Where(c => c.IsDeleted == false).ToList();
             return View(subCategory);
         }
 
@@ -98,28 +103,27 @@ namespace AUCTIONHIVE.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+
+            try
             {
-                try
-                {
-                    _context.Update(subCategory);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SubCategoryExists(subCategory.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(subCategory);
+                await _context.SaveChangesAsync();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", subCategory.CategoryId);
-            return View(subCategory);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SubCategoryExists(subCategory.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+
+            //ViewBag.Categories = _context.Categories.Where(c => c.IsDeleted == false).ToList();
+            //return View(subCategory);
         }
 
         // GET: SubCategories/Delete/5
