@@ -6,6 +6,7 @@ namespace AUCTIONHIVE.Models
     {
         public string Name { get; set; }
         public string? Description { get; set; }
+        public List<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
 
 
     }

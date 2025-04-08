@@ -67,11 +67,11 @@ namespace AUCTIONHIVE.Controllers
 
                 // Load dropdown data
                 ViewBag.Categories = _context.Categories
-                    .Where(c => c.IsDeleted == false && c.CreatedBy == userId)
+                    .Where(c => c.IsDeleted == false)
                     .ToList();
 
                 ViewBag.SubCategories = _context.SubCategories
-                    .Where(s => s.IsDeleted == false && s.CreatedBy == userId)
+                    .Where(s => s.IsDeleted == false )
                     .ToList();
 
                 ViewBag.ScheduledAuctions = _context.ScheduledAuctions
@@ -232,7 +232,7 @@ namespace AUCTIONHIVE.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var subCategories = _context.SubCategories
-                .Where(s => s.CategoryId == categoryId && s.IsDeleted == false && s.CreatedBy == userId)
+                .Where(s => s.CategoryId == categoryId && s.IsDeleted == false)
                 .Select(s => new { id = s.Id, name = s.Name })
                 .ToList();
 

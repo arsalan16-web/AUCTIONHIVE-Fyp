@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using AUCTIONHIVE.Data;
 using AUCTIONHIVE.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,15 +8,22 @@ namespace AUCTIONHIVE.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public ApplicationDbContext _context;
+        public HomeController(ILogger<HomeController> logger,ApplicationDbContext context)
         {
+            _context = context;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public  async Task< IActionResult> Index()
         {
-            return View();
+            ProductsViewModel model = new ProductsViewModel();
+
+            var allProduct =  _context.Products.Where(x=>x.Status=="Active");
+
+
+
+            return View(model);
         }
 
         public IActionResult Privacy()

@@ -1,46 +1,37 @@
-﻿@{
+﻿@using AUCTIONHIVE.Data
+@{
     ViewData["Title"] = "Home Page";
 }
+@inject ApplicationDbContext _context
+@{
+
+    var categories = _context.Categories;
+}
+@model ProductsViewModel
+
 <!-- ============================================-->
 <!-- <section> begin ============================-->
 <section class="py-0">
     <div class="container-small">
         <div class="scrollbar">
             <div class="d-flex justify-content-between">
-                <a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2 bg-warning-subtle" data-bs-theme="light"><span class="fs-4 uil uil-star text-warning"></span></div>
-                    <p class="nav-label">Deals</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-shopping-bag"></span></div>
-                    <p class="nav-label">Grocery</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-watch-alt"></span></div>
-                    <p class="nav-label">Fashion</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-mobile-android"></span></div>
-                    <p class="nav-label">Mobile</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-monitor"></span></div>
-                    <p class="nav-label">Electronics</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-estate"></span></div>
-                    <p class="nav-label">Home</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-lamp"></span></div>
-                    <p class="nav-label">Dining</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-gift"></span></div>
-                    <p class="nav-label">Gifts</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-wrench"></span></div>
-                    <p class="nav-label">Tools</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-plane-departure"></span></div>
-                    <p class="nav-label">Travel</p>
-                </a><a class="icon-nav-item" href="#!">
-                    <div class="icon-container mb-2" data-bs-theme="undefined"><span class="fs-4 uil uil-palette"></span></div>
-                    <p class="nav-label">Others</p>
-                </a>
+                @foreach(var item in categories)
+                {
+                    var bgClasses = new[] { "bg-warning", "bg-success", "bg-primary", "bg-info" };
+                    var firstChar = char.ToUpper(item.Name[0]);
+
+                    // Get a random index for the background class
+                    var randomBgClass = bgClasses[new Random().Next(bgClasses.Length)];
+
+                    <a class="icon-nav-item" href="#!">
+                        <div class="icon-container mb-2" data-bs-theme="light"> @firstChar<span class="fs-4 uil uil-star text-warning"></span></div>
+                        <p class="nav-label">@item.Name</p>
+                    </a>
+
+
+                }
+                
+              
             </div>
         </div>
     </div><!-- end of .container-->
@@ -69,6 +60,20 @@
                     <!--/.bg-holder-->
                     <div class="banner-text text-md-center">
                         <h2 class="text-white fw-bolder fs-xl-4">Get <span class="gradient-text">10% Off </span><br class="d-md-none"> on gift items</h2><a class="btn btn-lg btn-primary rounded-pill banner-button" href="#!">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-6">
+                <div class="best-in-market-banner d-flex h-100 px-4 px-sm-7 py-5 px-md-11 rounded-3 overflow-hidden">
+                    <div class="bg-holder z-n1 banner-bg" style="background-image:url(../../../assets/img/e-commerce/best-in-market-bg.png);"></div>
+                    <!--/.bg-holder-->
+                    <div class="row align-items-center w-sm-100">
+                        <div class="col-8">
+                            <div class="banner-text">
+                                <h2 class="text-white fw-bolder fs-sm-4 mb-5">MI 11 Pro<br><span class="fs-7 fs-sm-6"> Best in the market</span></h2><a class="btn btn-lg btn-warning rounded-pill banner-button" href="#!">Buy Now</a>
+                            </div>
+                        </div>
+                        <div class="col-4"><img class="w-100 w-sm-75" src="../../../assets/img/e-commerce/5.png" alt=""></div>
                     </div>
                 </div>
             </div>
