@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AUCTIONHIVE.Controllers
 {
@@ -16,12 +17,47 @@ namespace AUCTIONHIVE.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
+
+
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get logged-in User ID
-                var products = _context.Products.Include(s=>s.Category).Include(s=>s.SubCategory).Where(s=>s.CreatedBy ==  userId && s.IsDeleted == false).ToList();
+
+                //var list= FakeProductGenerator.GenerateFakeProducts(200, userId);
+                //List<ScheduledAuction> li=new List<ScheduledAuction>();
+                //foreach(var item in list.Where(x => x.IsAuction))
+                //{
+                //    if (item.IsAuction)
+                //    {
+                //        ScheduledAuction scheduledAuction = new ScheduledAuction
+                //        {
+                //            ProductId = item.Id,
+                //            Id = Guid.NewGuid().ToString(),
+                //            CreatedAt = DateTime.Now,
+                //            UpdateAt = DateTime.Now,
+                //            CreatedBy = userId,
+                //            UpdatedBy = userId,
+                //            StartTime = DateTime.Now,
+                //            EndTime = DateTime.Now.AddHours(2),
+                //            StreamUrl = "http",
+                //            StreamChannel = "http",
+                //        };
+                //        li.Add(scheduledAuction);
+                //    }
+
+
+                //}
+                //_context.Products.AddRange(list);
+                //await _context.SaveChangesAsync();
+
+                //_context.ScheduledAuctions.AddRange(li);
+                //await _context.SaveChangesAsync();
+
+
+
+                var products = _context.Products.Include(x=>x.Images).Include(s=>s.Category).Include(s=>s.SubCategory).Where(s=>s.CreatedBy ==  userId && s.IsDeleted == false).ToList();
                 ProductsModel model = new ProductsModel();
                 List<ProductsModel> productsList = new List<ProductsModel>();
                 ProductsModel obj;  
@@ -39,7 +75,7 @@ namespace AUCTIONHIVE.Controllers
                     obj.Status = product.Status;
                     obj.IsAuction = product.IsAuction;
                     obj.IsVideoStreaming = product.IsVideoStreaming;
-                    obj.ScheduledAuctionId = product.ScheduledAuctionId;
+                  //  obj.ScheduledAuctionId = product.ScheduledAuctionId;
                     obj.BiddingFee = product.BiddingFee;
                     obj.Images = product.Images;
                     obj.CreatedBy = product.CreatedBy;
@@ -163,10 +199,11 @@ namespace AUCTIONHIVE.Controllers
                 product.Status = model.Status;
                 product.IsAuction = model.IsAuction;
                 product.IsVideoStreaming = model.IsVideoStreaming;
-                if (product.IsVideoStreaming)
+                if (product.IsAuction)
                 {
                     ScheduledAuction scheduledAuction = new ScheduledAuction
                     {
+                        ProductId = product.Id,
                         Id = Guid.NewGuid().ToString(),
                         CreatedAt =DateTime.Now,
                         UpdateAt = DateTime.Now,

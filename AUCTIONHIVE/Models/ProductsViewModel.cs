@@ -3,7 +3,8 @@
     public class ProductsViewModel
     {
         
-        public List<ProductsByCategories> TopSuggestedProducts { get; set; } = new List<ProductsByCategories>();
+        public List<Product> TopSuggestedProducts { get; set; } = new List<Product>();
+        public List<ProductsByCategories> ProductByCategory { get; set; } = new List<ProductsByCategories>();
         public List<Product> OngoingAuctions { get; set; } = new List<Product>();
 
     }

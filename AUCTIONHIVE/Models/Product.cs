@@ -29,6 +29,8 @@ namespace AUCTIONHIVE.Models
         public string SellerId { get; set; } // Foreign Key to User
         public ApplicationUser Seller { get; set; }
         public string Title { get; set; }
+        public bool IsDiscount { get; set; } = false;
+        public decimal DiscountedPrice { get; set; } = 0;
         public string Description { get; set; }
         public decimal Price { get; set; }
         [ForeignKey("Categories")]
@@ -44,19 +46,16 @@ namespace AUCTIONHIVE.Models
         public string Status { get; set; }  // Active, Sold, Expired
         public bool IsAuction { get; set; }
         public bool IsVideoStreaming { get; set; }
-        [ForeignKey("ScheduledAuctions")]
-        public string? ScheduledAuctionId { get; set; }
-        public ScheduledAuction? ScheduledAuction { get; set; }
+        //[ForeignKey("ScheduledAuctions")]
+        //public string? ScheduledAuctionId { get; set; }
+        //public ScheduledAuction? ScheduledAuction { get; set; }
+
         public double BiddingFee { get; set; } = 0;
 
-
-
-
-
-
-
-
+        public int ProductViews { get;set; } = 0;
     }
+
+   
     public class Images : BaseClass
     {
 

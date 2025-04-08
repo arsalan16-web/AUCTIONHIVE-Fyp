@@ -25,7 +25,8 @@ namespace AUCTIONHIVE.ViewModels
         public decimal Price { get; set; }
         public string CategoryId { get; set; }
         public string SubCategoryId { get; set; }
-
+        public bool IsDiscount { get; set; } = false;
+        public decimal DiscountedPrice { get; set; } = 0;
         public string Location { get; set; } //Address
         public string Condition { get; set; }  // New, Used
         public string Status { get; set; }  // Active, Sold, Expired

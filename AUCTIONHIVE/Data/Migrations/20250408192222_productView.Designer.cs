@@ -4,6 +4,7 @@ using AUCTIONHIVE.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AUCTIONHIVE.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250408192222_productView")]
+    partial class productView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -349,16 +352,10 @@ namespace AUCTIONHIVE.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("DiscountedPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<bool>("IsAuction")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDiscount")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsVideoStreaming")
@@ -370,9 +367,6 @@ namespace AUCTIONHIVE.Data.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProductViews")
-                        .HasColumnType("int");
 
                     b.Property<string>("SellerId")
                         .IsRequired()

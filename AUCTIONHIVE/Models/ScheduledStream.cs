@@ -12,6 +12,11 @@ namespace AUCTIONHIVE.Models
         public string StreamChannel { get; set; } // E.g., "Scheduled", "Active", "Ended"
         public List<StreamingUsers> StreamingUsers { get; set; }
         public List<Bid> Bids { get; set; }
+
+        [ForeignKey("Products")]
+        public string ProductId { get; set; }
+        public Product Product { get; set; }
+
     }
     public class StreamingUsers : BaseClass
     {

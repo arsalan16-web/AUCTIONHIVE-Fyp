@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AUCTIONHIVE.Models
 {
-    public class FakeProductGenerator
+    public static class FakeProductGenerator
     {
         public static List<Product> GenerateFakeProducts(int count, string userId)
         {
@@ -13,19 +13,20 @@ namespace AUCTIONHIVE.Models
                 .RuleFor(p => p.Title, f => f.Commerce.ProductName())
                 .RuleFor(p => p.Description, f => f.Lorem.Paragraph())
                 .RuleFor(p => p.Price, f => f.Random.Decimal(10, 1000))
-                .RuleFor(p => p.CategoryId, f => f.Random.Guid().ToString())
-                .RuleFor(p => p.SubCategoryId, f => f.Random.Guid().ToString())
+                .RuleFor(p => p.CategoryId, f => "345678987654567")
+                .RuleFor(p => p.SubCategoryId, f => "8c7922a4-66ec-4222-8c87-21974880ec06")
                 .RuleFor(p => p.Condition, f => f.PickRandom(new[] { "New", "Used", "Refurbished" }))
-                .RuleFor(p => p.Status, f => "Available")
+                .RuleFor(p => p.Status, f => "Active")
                 .RuleFor(p => p.IsAuction, f => f.Random.Bool())
                 .RuleFor(p => p.IsVideoStreaming, f => f.Random.Bool())
-                .RuleFor(p => p.BiddingFee, f => f.Random.Decimal(1, 50))
+                .RuleFor(p => p.BiddingFee, f => f.Random.Double(1, 50))
                 .RuleFor(p => p.Location, f => f.Address.City())
                 .RuleFor(p => p.CreatedAt, f => DateTime.UtcNow)
                 .RuleFor(p => p.CreatedBy, f => userId)
                 .RuleFor(p => p.UpdateAt, f => DateTime.UtcNow)
                 .RuleFor(p => p.UpdatedBy, f => userId)
-                .RuleFor(p => p.SellerId, f => "ecaff4b8-f5eb-426f-af6e-43c760753e64")
+                .RuleFor(p => p.SellerId, f => userId)
+
                 .RuleFor(p => p.Images, f =>
                 {
                     var images = new List<Images>();
@@ -34,7 +35,7 @@ namespace AUCTIONHIVE.Models
                         images.Add(new Images
                         {
                             Id = Guid.NewGuid().ToString(),
-                            Image = "/uploads/fake-image-" + f.Random.Int(1000, 9999) + ".jpg",
+                            Image = "/uploads/1654e896-bef7-49b4-840b-3de701257c96.jpg",
                             CreatedAt = DateTime.UtcNow,
                             CreatedBy = userId
                         });
